@@ -40,8 +40,7 @@ model Form {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  title    String
-  services Service[] // Связь один ко многим (1:M)
+  title String
 }
 
 model Center {
@@ -49,8 +48,7 @@ model Center {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  title    String
-  services Service[] // Один центр может иметь много сервисов (1:M)
+  title String
 }
 
 model Service {
@@ -61,11 +59,8 @@ model Service {
   title       String
   description String
   img         String[]
-
-  center   Center? @relation(fields: [centerId], references: [id]) // Связь M:1 с Center
-  centerId Int? // Внешний ключ
-  Form     Form?   @relation(fields: [formId], references: [id])
-  formId   Int?
+  centerId    Int
+  
 }
 
 model Banner {

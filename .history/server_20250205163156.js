@@ -281,7 +281,7 @@ app.use('/api/forms', formsRoutes);
 app.use('/api/news', newsRoutes);
 app.use('/api/typeSupports', typeSupportRoutes);
 app.use('/api/tagsSupports', tagsSupportRoutes);
-app.use('/api/centers', centerRoutes);
+// app.use('/api/orders', orderRoutes);
 // app.use('/api/feedBack', feedBackRoutes);
 
 // Обработка ошибок

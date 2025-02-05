@@ -50,7 +50,7 @@ model Center {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   title    String
-  services Service[] // Один центр может иметь много сервисов (1:M)
+  services Service[] // Связь один ко многим (1:M)
 }
 
 model Service {
@@ -62,11 +62,13 @@ model Service {
   description String
   img         String[]
 
-  center   Center? @relation(fields: [centerId], references: [id]) // Связь M:1 с Center
-  centerId Int? // Внешний ключ
-  Form     Form?   @relation(fields: [formId], references: [id])
-  formId   Int?
+  centerId Int
+  formId   Int
+
+  center Center @relation(fields: [centerId], references: [id], onDelete: Cascade)
+  form   Form   @relation(fields: [formId], references: [id], onDelete: Cascade)
 }
+
 
 model Banner {
   id        Int      @id @default(autoincrement())

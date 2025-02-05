@@ -19,7 +19,7 @@ import formsRoutes from './app/form/form.routes.js';
 import newsRoutes from './app/news/news.routes.js';
 import typeSupportRoutes from './app/typeSupport/typeSupport.routes.js';
 import tagsSupportRoutes from './app/tagsSupport/tagsSupport.routes.js';
-import centerRoutes from './app/center/center.routes.js';
+import centerRoutes from'
 // import orderRoutes from './app/order/order.routes.js';
 // import feedBackRoutes from './app/feedBack/feedBack.routes.js';
 
@@ -281,7 +281,7 @@ app.use('/api/forms', formsRoutes);
 app.use('/api/news', newsRoutes);
 app.use('/api/typeSupports', typeSupportRoutes);
 app.use('/api/tagsSupports', tagsSupportRoutes);
-app.use('/api/centers', centerRoutes);
+// app.use('/api/orders', orderRoutes);
 // app.use('/api/feedBack', feedBackRoutes);
 
 // Обработка ошибок
