@@ -21,8 +21,7 @@ import typeSupportRoutes from './app/typeSupport/typeSupport.routes.js';
 import tagsSupportRoutes from './app/tagsSupport/tagsSupport.routes.js';
 import centerRoutes from './app/center/center.routes.js';
 import serviceRoutes from './app/service/service.routes.js';
-import supportRoutes from './app/support/support.routes.js';
-import mapRoutes from './app/map/map.routes.js';
+// import feedBackRoutes from './app/feedBack/feedBack.routes.js';
 
 dotenv.config();
 
@@ -283,9 +282,7 @@ app.use('/api/news', newsRoutes);
 app.use('/api/typeSupports', typeSupportRoutes);
 app.use('/api/tagsSupports', tagsSupportRoutes);
 app.use('/api/centers', centerRoutes);
-app.use('/api/services', serviceRoutes);
-app.use('/api/supports', supportRoutes);
-app.use('/api/maps', mapRoutes);
+app.use('/api/services', feedBackRoutes);
 
 // Обработка ошибок
 app.use(notFound);

@@ -50,7 +50,7 @@ model Center {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   title    String
-  services ServiceOnCenters[] // 🔹 M:N связь через промежуточную таблицу
+  services Service[] // Один центр может иметь много сервисов (1:M)
 }
 
 model Service {
@@ -62,20 +62,10 @@ model Service {
   description String
   img         String[]
 
-  centers ServiceOnCenters[] // 🔹 M:N связь через промежуточную таблицу
-  form    Form?              @relation(fields: [formId], references: [id])
-  formId  Int?
-}
-
-// 🔥 Промежуточная таблица для связи M:N
-model ServiceOnCenters {
-  center   Center @relation(fields: [centerId], references: [id])
-  centerId Int
-
-  service   Service @relation(fields: [serviceId], references: [id])
-  serviceId Int
-
-  @@id([centerId, serviceId]) // Композитный первичный ключ
+  center   Center? @relation(fields: [centerId], references: [id]) // Связь M:1 с Center
+  centerId Int? // Внешний ключ
+  form     Form?   @relation(fields: [formId], references: [id])
+  formId   Int?
 }
 
 model Banner {
@@ -105,7 +95,7 @@ model Map {
   title String
   ip    String
   ul    String
-  smsp   String
+  all   String
 }
 
 model Support {

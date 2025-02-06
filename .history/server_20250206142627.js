@@ -22,7 +22,7 @@ import tagsSupportRoutes from './app/tagsSupport/tagsSupport.routes.js';
 import centerRoutes from './app/center/center.routes.js';
 import serviceRoutes from './app/service/service.routes.js';
 import supportRoutes from './app/support/support.routes.js';
-import mapRoutes from './app/map/map.routes.js';
+import mapRoutes from './app/map/';
 
 dotenv.config();
 
