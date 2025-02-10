@@ -105,7 +105,7 @@ model Map {
   title String
   ip    String
   ul    String
-  smsp  String
+  smsp   String
 }
 
 model Support {
@@ -164,15 +164,11 @@ model showCase {
   img         String[]
 }
 
+
 model Bid {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  name    String
-  phone   String
-  email   String
-  form    String
-  inn     String
-  comment String
+name
 }

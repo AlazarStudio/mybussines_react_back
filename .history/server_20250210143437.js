@@ -23,7 +23,7 @@ import centerRoutes from './app/center/center.routes.js';
 import serviceRoutes from './app/service/service.routes.js';
 import supportRoutes from './app/support/support.routes.js';
 import mapRoutes from './app/map/map.routes.js';
-import bidRoutes from './app/bid/bid.routes.js';
+import mapRoutes from './app/map/map.routes.js';
 
 dotenv.config();
 
@@ -287,7 +287,6 @@ app.use('/api/centers', centerRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/supports', supportRoutes);
 app.use('/api/maps', mapRoutes);
-app.use('/api/bids', bidRoutes);
 
 // Обработка ошибок
 app.use(notFound);

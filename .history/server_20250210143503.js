@@ -287,7 +287,7 @@ app.use('/api/centers', centerRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/supports', supportRoutes);
 app.use('/api/maps', mapRoutes);
-app.use('/api/bids', bidRoutes);
+app.use('/api/bid', bidRoutes);
 
 // Обработка ошибок
 app.use(notFound);
