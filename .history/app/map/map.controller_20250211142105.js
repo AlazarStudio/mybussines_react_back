@@ -9,7 +9,7 @@ export const getMaps = asyncHandler(async (req, res) => {
   const rangeEnd = range ? JSON.parse(range)[0] : rangeStart + 13;
 
   const sortField = sort ? JSON.parse(sort)[0] : 'createdAt';
-  const sortOrder = sort ? JSON.parse(sort)[0].toLowerCase() : 'desc';
+  const sortOrder = sort ? JSON.parse(sort)[1].toLowerCase() : 'desc';
 
   const filters = filter ? JSON.parse(filter) : {};
 
