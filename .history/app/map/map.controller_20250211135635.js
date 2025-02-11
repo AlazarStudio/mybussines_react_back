@@ -88,7 +88,7 @@ export const updateMap = asyncHandler(async (req, res) => {
 
   try {
     const existingMap = await prisma.map.findUnique({
-      where: { id: parseInt(id, 13) },
+      where: { id: parseInt(id, 10) },
     });
 
     if (!existingMap) {

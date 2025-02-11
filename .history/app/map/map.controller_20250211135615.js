@@ -6,7 +6,7 @@ export const getMaps = asyncHandler(async (req, res) => {
   const { range, sort, filter } = req.query;
 
   const rangeStart = range ? JSON.parse(range)[0] : 0;
-  const rangeEnd = range ? JSON.parse(range)[1] : rangeStart + 13;
+  const rangeEnd = range ? JSON.parse(range)[1] : rangeStart + 11;
 
   const sortField = sort ? JSON.parse(sort)[0] : 'createdAt';
   const sortOrder = sort ? JSON.parse(sort)[1].toLowerCase() : 'desc';
@@ -46,7 +46,7 @@ export const getOneMap = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
   const map = await prisma.map.findUnique({
-    where: { id: parseInt(id, 13) },
+    where: { id: parseInt(id, 10) },
   });
 
   if (!map) {
@@ -88,7 +88,7 @@ export const updateMap = asyncHandler(async (req, res) => {
 
   try {
     const existingMap = await prisma.map.findUnique({
-      where: { id: parseInt(id, 13) },
+      where: { id: parseInt(id, 10) },
     });
 
     if (!existingMap) {
