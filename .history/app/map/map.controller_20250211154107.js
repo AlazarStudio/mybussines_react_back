@@ -6,7 +6,7 @@ export const getMaps = asyncHandler(async (req, res) => {
   const { range, sort, filter } = req.query;
 
   const rangeStart = range ? JSON.parse(range)[0] : 0;
-  const rangeEnd = range ? JSON.parse(range)[1] : rangeStart + 9999999;
+  const rangeEnd = range ? JSON.parse(range)[1] : rangeStart + 10;
 
   const sortField = sort ? JSON.parse(sort)[0] : 'createdAt';
   const sortOrder = sort ? JSON.parse(sort)[1].toLowerCase() : 'desc';
