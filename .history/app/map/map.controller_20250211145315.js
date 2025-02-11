@@ -1,7 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import { prisma } from '../prisma.js';
 
-// 📌 Получить список карт (БЕЗ ПАГИНАЦИИ)
+// 📌 Получить список карт (без пагинации)
 export const getMaps = asyncHandler(async (req, res) => {
   const { sort, filter } = req.query;
 
@@ -55,7 +55,12 @@ export const createMap = asyncHandler(async (req, res) => {
 
   try {
     const map = await prisma.map.create({
-      data: { title, ip, ul, smsp },
+      data: {
+        title,
+        ip,
+        ul,
+        smsp,
+      },
     });
 
     res.status(201).json(map);

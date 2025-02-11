@@ -1,9 +1,12 @@
 import asyncHandler from 'express-async-handler';
 import { prisma } from '../prisma.js';
 
-// 📌 Получить список карт (БЕЗ ПАГИНАЦИИ)
+// 📌 Получить список карт с фильтрацией, сортировкой и пагинацией
 export const getMaps = asyncHandler(async (req, res) => {
-  const { sort, filter } = req.query;
+  const { range, sort, filter } = req.query;
+
+  const rangeStart = range ? JSON.parse(range)[0] : 0;
+  const rangeEnd = range ? JSON.parse(range)[1] : rangeStart + 13;
 
   const sortField = sort ? JSON.parse(sort)[0] : 'createdAt';
   const sortOrder = sort ? JSON.parse(sort)[1].toLowerCase() : 'desc';
@@ -22,11 +25,19 @@ export const getMaps = asyncHandler(async (req, res) => {
     return acc;
   }, {});
 
+  const totalMaps = await prisma.map.count({ where });
+
   const maps = await prisma.map.findMany({
     where,
+    skip: rangeStart,
+    take: Math.min(rangeEnd - rangeStart + 1, totalMaps),
     orderBy: { [sortField]: sortOrder },
   });
 
+  res.set(
+    'Content-Range',
+    `maps ${rangeStart}-${Math.min(rangeEnd, totalMaps - 1)}/${totalMaps}`
+  );
   res.json(maps);
 });
 
@@ -35,7 +46,7 @@ export const getOneMap = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
   const map = await prisma.map.findUnique({
-    where: { id: parseInt(id, 10) },
+    where: { id: parseInt(id, 13) },
   });
 
   if (!map) {
@@ -55,7 +66,12 @@ export const createMap = asyncHandler(async (req, res) => {
 
   try {
     const map = await prisma.map.create({
-      data: { title, ip, ul, smsp },
+      data: {
+        title,
+        ip,
+        ul,
+        smsp,
+      },
     });
 
     res.status(201).json(map);
@@ -72,7 +88,7 @@ export const updateMap = asyncHandler(async (req, res) => {
 
   try {
     const existingMap = await prisma.map.findUnique({
-      where: { id: parseInt(id, 10) },
+      where: { id: parseInt(id, 13) },
     });
 
     if (!existingMap) {
