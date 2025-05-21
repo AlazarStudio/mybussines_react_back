@@ -6,7 +6,7 @@ import path from 'path';
 import fs from 'fs';
 import cors from 'cors';
 import multer from 'multer';
-import xml2js from 'xml2js'; 
+import xml2js from 'xml2js';
 import sharp from 'sharp';
 import https from 'https';
 import { errorHandler, notFound } from './app/middleware/error.middleware.js';
@@ -15,11 +15,15 @@ import { prisma } from './app/prisma.js';
 import authRoutes from './app/auth/auth.routes.js';
 import userRoutes from './app/user/user.routes.js';
 // import productRoutes from './app/product/product.routes.js';
-import formsRoutes from './app/';
+import formsRoutes from './app/form/form.routes.js';
 import newsRoutes from './app/news/news.routes.js';
-// import cartRoutes from './app/basket/basket.routes.js';
-// import orderRoutes from './app/order/order.routes.js';
-// import feedBackRoutes from './app/feedBack/feedBack.routes.js';
+import typeSupportRoutes from './app/typeSupport/typeSupport.routes.js';
+import tagsSupportRoutes from './app/tagsSupport/tagsSupport.routes.js';
+import centerRoutes from './app/center/center.routes.js';
+import serviceRoutes from './app/service/service.routes.js';
+import supportRoutes from './app/support/support.routes.js';
+import mapRoutes from './app/map/map.routes.js';
+import bidRoutes from './app/bid/bid.routes.js';
 
 dotenv.config();
 
@@ -71,7 +75,7 @@ const upload1 = multer({
   storage1,
   limits: { fileSize: 1024 * 1024 * 48 }, // лимит размера файла 48MB
   fileFilter: (req, file, cb) => {
-    const fileTypes = /jpeg|jpg|png|gif/;
+    const fileTypes = /jpeg|jpg|png|gif|webp/;
     const extname = fileTypes.test(
       path.extname(file.originalname).toLowerCase()
     );
@@ -274,12 +278,16 @@ const saveDataToDatabase = async (shop) => {
 // Остальные маршруты
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/forms', forms);
+app.use('/api/forms', formsRoutes);
 // app.use('/api/subCategories', subCategoryRoutes);
 app.use('/api/news', newsRoutes);
-// app.use('/api/cart', cartRoutes);
-// app.use('/api/orders', orderRoutes);
-// app.use('/api/feedBack', feedBackRoutes);
+app.use('/api/typeSupports', typeSupportRoutes);
+app.use('/api/tagsSupports', tagsSupportRoutes);
+app.use('/api/centers', centerRoutes);
+app.use('/api/services', serviceRoutes);
+app.use('/api/supports', supportRoutes);
+app.use('/api/maps', mapRoutes);
+app.use('/api/bids', bidRoutes);
 
 // Обработка ошибок
 app.use(notFound);
@@ -287,6 +295,7 @@ app.use(errorHandler);
 
 // Запуск сервера
 const PORT = process.env.PORT || 443;
+
 
 app.listen(PORT, () => {
   console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
