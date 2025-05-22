@@ -8,7 +8,7 @@ export const getNews = asyncHandler(async (req, res) => {
   const { range, sort, filter } = req.query;
 
   const rangeStart = range ? JSON.parse(range)[0] : 0;
-  const rangeEnd = range ? JSON.parse(range)[1] : rangeStart + 10; // Безопасное ограничение
+  const rangeEnd = range ? JSON.parse(range)[1] : rangeStart + ; // Безопасное ограничение
 
   const sortField = sort ? JSON.parse(sort)[0] : 'createdAt';
   const sortOrder = sort ? JSON.parse(sort)[1].toLowerCase() : 'desc';
@@ -38,7 +38,7 @@ export const getNews = asyncHandler(async (req, res) => {
 
   res.set(
     'Content-Range',
-    `news ${rangeStart}-${Math.min(rangeEnd, totalNews - 1)}/${totalNews}`,
+    `news ${rangeStart}-${Math.min(rangeEnd, totalNews - 1)}/${totalNews}`
   );
   res.json(news);
 });
@@ -65,18 +65,18 @@ export const getOneNews = asyncHandler(async (req, res) => {
 // @route   POST /api/news
 // @access  Private
 export const createNewNews = asyncHandler(async (req, res) => {
-  const {
-    title, img, date, description,
-  } = req.body;
+  const { title, img, date, description } = req.body;
 
   if (!title || !img || !Array.isArray(img)) {
     res.status(400).json({ error: 'Title and img (array) are required' });
     return;
   }
 
-  const images = img.map((image) => (typeof image === 'object' && image.rawFile?.path
-    ? `/uploads/${image.rawFile.path}`
-    : image));
+  const images = img.map((image) =>
+    typeof image === 'object' && image.rawFile?.path
+      ? `/uploads/${image.rawFile.path}`
+      : image
+  );
 
   const news = await prisma.news.create({
     data: {
@@ -95,9 +95,7 @@ export const createNewNews = asyncHandler(async (req, res) => {
 // @access  Private
 export const updateNews = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const {
-    title, img, date, description,
-  } = req.body;
+  const { title, img, date, description } = req.body;
 
   try {
     const existingNews = await prisma.news.findUnique({
@@ -109,25 +107,25 @@ export const updateNews = asyncHandler(async (req, res) => {
       return;
     }
 
-    const updatedNews = await prisma.news.update({
-      where: { id: parseInt(id, 10) },
-      data: {
-        title: title ?? existingNews.title,
-        img: Array.isArray(img) ? img : existingNews.img,
-        date: date ? new Date(date).toISOString() : existingNews.date,
-        description: description ?? existingNews.description,
-      },
-    });
-
     // const updatedNews = await prisma.news.update({
     //   where: { id: parseInt(id, 10) },
     //   data: {
     //     title: title ?? existingNews.title,
     //     img: Array.isArray(img) ? img : existingNews.img,
-    //     date: date ? new Date(date) : existingNews.date,
+    //     date: date ? new Date(date).toISOString() : existingNews.date,
     //     description: description ?? existingNews.description,
     //   },
     // });
+
+    const updatedNews = await prisma.news.update({
+      where: { id: parseInt(id, 10) },
+      data: {
+        title: title ?? existingNews.title,
+        img: Array.isArray(img) ? img : existingNews.img,
+        date: date ? new Date(date) : existingNews.date,
+        description: description ?? existingNews.description,
+      },
+    });
 
     res.json(updatedNews);
   } catch (error) {
