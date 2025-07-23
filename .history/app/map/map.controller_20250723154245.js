@@ -6,7 +6,7 @@ export const getMaps = asyncHandler(async (req, res) => {
   const { range, sort, filter } = req.query;
 
   const rangeStart = range ? JSON.parse(range)[0] : 0;
-  const rangeEnd = range ? JSON.parse(range)[1] : rangeStart + 90;
+  const rangeEnd = range ? JSON.parse(range)[1] : rangeStart + 9999999;
 
   const sortField = sort ? JSON.parse(sort)[0] : 'createdAt';
   const sortOrder = sort ? JSON.parse(sort)[1].toLowerCase() : 'desc';
@@ -60,8 +60,14 @@ export const getOneMap = asyncHandler(async (req, res) => {
 export const createMap = asyncHandler(async (req, res) => {
   const { title, ip, ul, smsp } = req.body;
 
-  if (!title || !ip || !ul || !smsp) {
-    return res.status(400).json({ error: 'All fields are required' });
+  ip = Number(ip);
+  ul = Number(ul);
+  smsp = Number(smsp);
+
+  if (!title || isNaN(ip) || isNaN(ul) || isNaN(smsp)) {
+    return res
+      .status(400)
+      .json({ error: 'All fields are required and must be valid' });
   }
 
   try {
