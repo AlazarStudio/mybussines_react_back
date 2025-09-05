@@ -15,7 +15,7 @@ async function main() {
     data: {
       name: 'admin',
       email: 'admin@admin.com',
-      login: 'moibiz999',
+      login: 'moibiz',
       password: hashedPasswordAdmin,
     },
   });
